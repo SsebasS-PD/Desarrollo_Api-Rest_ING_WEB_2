@@ -31,7 +31,43 @@ const createGenero = async (req = request, res = response) => {
     }
 }
 
+// Actualizar Genero
+const updateGenero = async (req = request, res = response) => {
+    try {
+        const { id } = req.params;
+        const data = req.body;
+
+        data.fechaActualizacion = Date.now();
+
+        const genero = await Genero.findByIdAndUpdate(id, data, { new: true });
+
+        res.status(200).json(genero);
+    } catch (error) {
+        console.error('✖️ Error al actualizar el género:', error);
+        res.status(500).json({msg: 'Ocurrió un error al actualizar el género'});
+    }
+}
+
+// Eliminar Genero
+const deleteGenero = async (req = request, res = response) => {
+    try {
+        const { id } = req.params;
+
+        const genero = await Genero.findByIdAndDelete(id);
+
+        res.status(200).json({
+            msg: 'Género eliminado correctamente',
+            genero
+        });
+    } catch (error) {
+        console.error('✖️ Error al eliminar el género:', error);
+        res.status(500).json({msg: 'Ocurrió un error al eliminar el género'});
+    }
+}
+
 module.exports = {
     getGeneros,
-    createGenero
+    createGenero,
+    updateGenero,
+    deleteGenero
 }

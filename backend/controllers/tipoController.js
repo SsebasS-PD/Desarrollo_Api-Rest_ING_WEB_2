@@ -31,7 +31,43 @@ const createTipo = async (req = request, res = response) => {
     }
 }
 
+// Actualizar Tipo
+const updateTipo = async (req = request, res = response) => {
+    try {
+        const { id } = req.params;
+        const data = req.body;
+
+        data.fechaActualizacion = Date.now();
+
+        const tipo = await Tipo.findByIdAndUpdate(id, data, { new: true });
+
+        res.status(200).json(tipo);
+    } catch (error) {
+        console.error('✖️ Error al actualizar el tipo:', error);
+        res.status(500).json({msg: 'Ocurrió un error al actualizar el tipo'});
+    }
+}
+
+// Eliminar Tipo
+const deleteTipo = async (req = request, res = response) => {
+    try {
+        const { id } = req.params;
+
+        const tipo = await Tipo.findByIdAndDelete(id);
+
+        res.status(200).json({
+            msg: 'Tipo eliminado correctamente',
+            tipo
+        });
+    } catch (error) {
+        console.error('✖️ Error al eliminar el tipo:', error);
+        res.status(500).json({msg: 'Ocurrió un error al eliminar el tipo'});
+    }
+}
+
 module.exports = {
     getTipos,
-    createTipo
+    createTipo,
+    updateTipo,
+    deleteTipo
 }

@@ -1,6 +1,6 @@
 const {Router} = require('express');
 
-const {getDirectores, createDirector} = require('../controllers/directorController');
+const {getDirectores, createDirector, updateDirector, deleteDirector} = require('../controllers/directorController');
 
 const router = Router();
 
@@ -8,4 +8,8 @@ router.get('/', getDirectores);
 
 router.post('/', createDirector);
 
-module.exports = router;
+router.put('/:id', updateDirector);
+
+router.delete('/:id', deleteDirector);
+
+module.exports = router;

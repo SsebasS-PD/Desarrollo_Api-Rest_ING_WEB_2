@@ -1,6 +1,6 @@
 const {Router} = require('express');
 
-const {getProductoras, createProductora} = require('../controllers/productoraController');
+const {getProductoras, createProductora, updateProductora, deleteProductora} = require('../controllers/productoraController');
 
 const router = Router();
 
@@ -8,4 +8,8 @@ router.get('/', getProductoras);
 
 router.post('/', createProductora);
 
-module.exports = router;
+router.put('/:id', updateProductora);
+
+router.delete('/:id', deleteProductora);
+
+module.exports = router;
